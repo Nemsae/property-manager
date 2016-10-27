@@ -17,7 +17,6 @@ const ServerActions = {
   },
 
   receiveTenants (tenants) {
-    // console.log('tenants in ServerActions: ', tenants);
     AppDispatcher.dispatch({
       type: types.RECEIVE_TENANTS,
       payload: { tenants }

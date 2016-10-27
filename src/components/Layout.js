@@ -8,9 +8,8 @@ export default class Layout extends Component {
         <div className='navbar navbar-inverse navbar-fixed-left'>
           <ul className='nav navbar-nav'>
             <li><Link className='link' to='/'>Home</Link></li>
-            <li><Link className='link' to='/clients'>Clients</Link></li>
+            <li><Link className='link' to='/tenants'>Tenants</Link></li>
             <li><Link className='link' to='/properties'>Properties</Link></li>
-            {/* <li><Link className='link' to='/adopted'>Lonely Ones</Link></li> */}
           </ul>
         </div>
         <div className='container'>

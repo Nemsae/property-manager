@@ -6,11 +6,22 @@ const Property = require('../models/Property');
 router.route('/')
   .get((req, res) => {
     Property.find() //  find ALL documents
+      .sort('address')
       .then((properties) => res.send(properties))
       .catch((err) => res.status(400).send(err));
   })
   .post((req, res) => {
     Property.create(req.body)
+      .then((property) => res.send(property))
+      .catch((err) => res.status(400).send(err));
+  });
+
+//  find property of the Tenant
+router.route('/findTenant/:id')
+  .get((req, res) => {
+    let { id } = req.params;
+    console.log('id: ', id);
+    Property.find({ tenants: id })
       .then((property) => res.send(property))
       .catch((err) => res.status(400).send(err));
   });
@@ -21,6 +32,13 @@ router.route('/:id')
     Property.findById(req.params.id)
       .populate('tenants')
       .then((property) => res.send(property))
+      .catch((err) => res.status(400).send(err));
+  })
+  .delete((req, res) => {
+    Property.findByIdAndRemove(req.params.id)
+      .then((something) => {
+        res.send(something);
+      })
       .catch((err) => res.status(400).send(err));
   });
 
