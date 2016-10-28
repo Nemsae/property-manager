@@ -1,9 +1,7 @@
-// LOAD ENV VARIABLES
-require('dotenv').config({ silent: true });
-
 // SET SERVER PORT
-const PORT = process.env.PORT || 8000;
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/property-manager'; //  name of the database
+// const PORT = process.env.PORT || 8000;
+// const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/property-manager'; //  name of the database
+
 // REQUIRES
 const bodyParser = require('body-parser');
 const express = require('express');
@@ -13,9 +11,14 @@ const mongoose = require('mongoose');
 const webpack = require('webpack');
 const webpackConfig = require('../webpack.config');
 
+const config = require('./config');
+
+const NODE_ENV = process.env.NODE_ENV || 'development';
+const DB_URI = config.db[NODE_ENV];
+
 mongoose.Promise = Promise;
-mongoose.connect(MONGODB_URI, (err) => {  //  connecting to mongo database
-  console.log(err || `MongoDB connected to ${MONGODB_URI}`);
+mongoose.connect(DB_URI, (err) => {  //  connecting to mongo database
+  console.log(err || `MongoDB connected to ${DB_URI}`);
 });
 // APP DECLARATION css italic
 const app = express();
@@ -42,7 +45,9 @@ app.get('*', (req, res) => {
   res.sendFile(indexPath);
 });
 
-// SERVER LISTEN
-app.listen(PORT, err => {
-  console.log(err || `Express listening on port ${PORT}`);
-});
+// // SERVER LISTEN
+// app.listen(PORT, (err) => {
+//   console.log(err || `Express listening on port ${PORT}`);
+// });
+
+module.exports = app;
